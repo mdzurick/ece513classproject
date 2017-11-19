@@ -7,7 +7,7 @@ var SensorData = db.model("SensorData", {
     submitTime: { type: Date, default: Date.now },
     latitude: Number,
     longitude: Number,
-    alititude: Number,
+    altitude: Number,
     UV: Number,
     measuredTime: Number
 });
