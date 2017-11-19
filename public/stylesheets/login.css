@@ -1,0 +1,30 @@
+
+body {
+    text-align: center;
+    /*background-image: url("https://qph.ec.quoracdn.net/main-qimg-f2474cad80574fdc3d328f9e04726fe8");*/
+    /*background-image: url("http://www.newseuminstitute.org/wp-content/uploads/2015/01/shutterstock_114682204.jpg");*/
+    background-image: url("http://eskipaper.com/images/nature-sun-rays-1.jpg");
+    
+}
+.row{
+    padding-top: 30px;
+    display: block;
+}
+#Title {
+    font-size: 50pt;
+}
+#header {
+    font-size: 20pt;
+}
+form {
+    padding: 20px;
+    background-color: white;
+    font-size: 18pt;
+    
+}
+label {
+    font-size: 18pt;
+}
+/*.card{*/
+/*     background-image: url("http://www.newseuminstitute.org/wp-content/uploads/2015/01/shutterstock_114682204.jpg");*/
+/*}*/

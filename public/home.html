@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<meta charset="UTF-8">
+
+<head>
+	<!--Import Google Icon Font-->
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+	<!--Import materialize.css-->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css" media="screen,projection">
+	<link href="stylesheets/SunSmart.css" rel="stylesheet">
+	<script src="javascripts/SunSmart.js" defer></script>
+	
+	<!--Import jQuery-->
+	<script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
+
+	<!--Let browser know website is optimized for mobile-->
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+	<!-- Chart Resources -->
+	<script src="https://www.amcharts.com/lib/3/amcharts.js"></script>
+	<script src="https://www.amcharts.com/lib/3/serial.js"></script>
+	<script src="https://www.amcharts.com/lib/3/plugins/export/export.min.js"></script>
+	<link rel="stylesheet" href="https://www.amcharts.com/lib/3/plugins/export/export.css" type="text/css" media="all" />
+	<script src="https://www.amcharts.com/lib/3/themes/light.js"></script>
+
+
+</head>
+
+<!--navigation bar-->
+<div class="topnav" id="myTopnav">
+  <a href="home.html" class="active">Home</a>
+  <a href="forecast.html">Forecast</a>
+  <a href="https://www.epa.gov/sunsafety/health-effects-uv-radiation">UV Health Effects</a>
+  <a href="login.html">Sign In</a>
+  <a href="javascript:void(0);" class="icon" onclick="myFunction()">&#9776;</a>
+</div>
+
+<title>SunSmart</title>
+
+<body>
+	<!--Import jQuery before materialize.js-->
+
+
+<!--<div class="col s12 m6">-->
+<!--	<div class="card blue-grey ">-->
+<!--		<div class="card-content white-text">-->
+<!--			<span class="card-title">SunSmart Data</span>-->
+<!--		</div>-->
+<!--	</div>-->
+<!--</div>-->
+<div class="row">
+<div class="col s12 m12">		
+	<div class="card blue-grey">
+		<div class="card-content white-text">
+			<div id="cardTitle">SunSmart UV Exposure</div>
+		<div id="chartdiv"></div>
+		</div>
+	</div>
+</div>
+</div>
+
+<div class="row">
+<div class="col s12 m12">		
+	<div class="card blue-grey">
+		<div class="card-content white-text">
+			<div id="cardTitle">SunSmart UV Exposure Data</div>
+		<table id="tablediv">
+
+<tr><th>Time</th><th>UV Intensity</th><th>Latitude</th><th>Longitude</th>
+
+
+
+</table>
+
+		</div>
+	</div>
+</div>
+</div>
+
+
+
+
+
+<div class="row">
+<div class="col s12 m6">		
+	<div class="card blue-grey">
+		<div class="card-content white-text">
+			<div id="cardTitle">Log Sunscreen Application</div>
+				<form action="https://wp.zybooks.com/form-viewer.php" target="_blank" method="POST">
+  					 
+  					 <span class="radios">
+  					 <div class="formTitle">Select SPF:</div>
+  					<span><input type="radio" name="spf" value="15" id="15"><label for="15">15</label></span>
+					<span><input type="radio" name="spf" value="30" id="30"><label for="30">30</label></span>
+					<span><input type="radio" name="spf" value="50" id="50"><label for="50">50</label></span>
+					<span><input type="radio" name="spf" value="75" id="75"><label for="75">75</label></span>
+					<span><input type="radio" name="spf" value="100" id="100"><label for="100">100</label></span>
+  					 <div class="submit"><input type="submit" value="Submit"></div>
+  					 </span>
+					
+				</form>
+		</div>
+	</div>
+</div>
+
+<div class="col s12 m6">		
+	<div class="card blue-grey">
+		<div class="card-content white-text">
+			<div id="cardTitle">Local UV Index</div>
+			<div id="index">3.2</div>
+		</div>
+	</div>
+</div>
+</div>
+
+</body>
+
+</html>
+
+	<!--<div class="col s12 m6">-->
+	<!--<div id="chartdiv">-->
