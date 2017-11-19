@@ -23,14 +23,14 @@ router.get("/", function(req, res) {
 /* POST sensor data*/
 router.post('/', function(req, res) {
 
-    var parseBody = new Object();
+var parseBody = new Object();
 
     parseBody.apikey = req.body.apikey;
     parseBody.deviceId = req.body.deviceId;
     parseBody.submitTime = req.body.time;
-    parseBody.latitude = req.body.GPS.location.latitude;
-    parseBody.longitude = req.body.GPS.location.longitude;
-    parseBody.altitude = req.body.GPS.altitude;
+    parseBody.latitude = req.body.latitude;
+    parseBody.longitude = req.body.longitude;
+    parseBody.altitude = req.body.altitude;
     parseBody.UV = req.body.UV;
     parseBody.measuredTime = req.body.date;
     
