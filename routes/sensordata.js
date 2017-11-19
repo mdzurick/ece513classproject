@@ -4,6 +4,13 @@ var SensorData = require("../models/sensordata");
 
 /* GET list of all sensor data */
 router.get("/", function(req, res) {
+
+    //Delets all stored readings
+//    SensorData.remove({}, function(err) {
+//	console.log("Removed");
+//    });
+
+    
     SensorData.find(function(err, sensordata) {
 	if (err) {
 	    res.status(400).send(err);
@@ -25,7 +32,7 @@ router.post('/', function(req, res) {
     parseBody.longitude = req.body.GPS.location.longitude;
     parseBody.altitude = req.body.GPS.altitude;
     parseBody.UV = req.body.UV;
-    parseBody.date = req.body.date;
+    parseBody.measuredTime = req.body.date;
     
     var sensordata = new SensorData(parseBody);
     sensordata.save(function(err, sensordata) {
