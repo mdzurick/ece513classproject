@@ -4,12 +4,6 @@ var SensorData = require("../models/sensordata");
 
 /* GET list of all sensor data */
 router.get("/", function(req, res) {
-
-    //Delets all stored readings
-//    SensorData.remove({}, function(err) {
-//	console.log("Removed");
-//    });
-
     
     SensorData.find(function(err, sensordata) {
 	if (err) {
