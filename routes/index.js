@@ -1,10 +1,11 @@
 var express = require('express');
 var router = express.Router();
+var path = require('path');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-    res.render('index', { title: 'SunSmart'});
-	//res.sendFile('/public/home.html'); 
+    //res.render('index', { title: 'SunSmart'});
+	res.sendFile(path.join(__dirname, '/../public/home.html')); 
 });
 
 module.exports = router;
