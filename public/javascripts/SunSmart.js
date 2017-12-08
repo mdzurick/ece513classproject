@@ -43,8 +43,8 @@ function responseReceivedHandler() {
 		//date: new Date(item.measuredTime),
 	       visits: item.UV
 	   });
-var tableDate = new Date(item.measuredTime * 1000);
-document.getElementById("tablediv").innerHTML += "<tr><td>" +tableDate+ "</td><td>" + item.UV+ "</td><td>" +item.latitude+ "</td><td>" + item.longitude + "</td>";
+//var tableDate = new Date(item.measuredTime * 1000);
+//document.getElementById("tablediv").innerHTML += "<tr><td>" +tableDate+ "</td><td>" + item.UV+ "</td><td>" +item.latitude+ "</td><td>" + item.longitude + "</td>";
        }
 
 //measured time in sec convert to ms for date constructor
