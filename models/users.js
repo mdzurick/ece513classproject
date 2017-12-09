@@ -7,6 +7,7 @@ var User = db.model("User", {
     passwordHash: String,
     lastAccess:   { type: Date, default: Date.now },
     userDevices:  [ String ],
+    isVerified: { type Boolean, default: false }
 });
 
 module.exports = User; 
