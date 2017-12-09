@@ -9,6 +9,7 @@ var index = require('./routes/index');
 var users = require('./routes/users');
 var sensordata = require('./routes/sensordata');
 var testing = require('./routes/testing');
+//var devices = require('./routes/devices');
 
 var app = express();
 
@@ -43,6 +44,7 @@ app.use('/', index);
 app.use('/users', users);
 app.use('/sensordata', sensordata);
 app.use('/testing', testing);
+//app.use('/devices', devices);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
