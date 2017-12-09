@@ -1,7 +1,7 @@
 0 info it worked if it ends with ok
 1 verbose cli [ '/usr/bin/node', '/usr/bin/npm', 'start' ]
 2 info using npm@3.10.10
-3 info using node@v6.12.0
+3 info using node@v6.12.1
 4 verbose run-script [ 'prestart', 'start', 'poststart' ]
 5 info lifecycle sunsmart@0.0.0~prestart: sunsmart@0.0.0
 6 silly lifecycle sunsmart@0.0.0~prestart: no script for prestart, continuing
@@ -26,7 +26,7 @@
 16 verbose cwd /home/ubuntu/sunsmart
 17 error Linux 4.4.0-1039-aws
 18 error argv "/usr/bin/node" "/usr/bin/npm" "start"
-19 error node v6.12.0
+19 error node v6.12.1
 20 error npm  v3.10.10
 21 error code ELIFECYCLE
 22 error sunsmart@0.0.0 start: `node ./bin/www`

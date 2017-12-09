@@ -21,12 +21,20 @@ var parseBody = new Object();
 
     parseBody.apikey = req.body.apikey;
     parseBody.deviceId = req.body.deviceId;
-    parseBody.submitTime = req.body.time;
+    parseBody.submitTime = req.body.submitTime;
     parseBody.latitude = req.body.latitude;
     parseBody.longitude = req.body.longitude;
     parseBody.altitude = req.body.altitude;
     parseBody.UV = req.body.UV;
-    parseBody.measuredTime = req.body.date;
+    parseBody.measuredTime = req.body.measuredTime;
+
+    for (var property in parseBody) {
+	if (parseBody.hasOwnProperty(property)) {
+	    if (parseBody[property] == null ) {
+		return res.status(400).send("\"" + property + "\"" + " is null/undefined");
+	    }
+	}
+    }
     
     var sensordata = new SensorData(parseBody);
     sensordata.save(function(err, sensordata) {
