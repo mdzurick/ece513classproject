@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 var fs = require('fs');
 var jwt = require("jwt-simple");
-//var Device =  require("../models/device");
+var Device =  require("../models/devices");
 var User = require("../models/users");
 var bcrypt = require("bcrypt-nodejs");
 
@@ -82,26 +82,25 @@ router.get("/status", function(req, res) {
 		    userStatus['email'] = user.email;
 		    userStatus['fullName'] = user.fullName;
 		    userStatus['lastAccess'] = user.lastAccess;
-//		    userStatus['redirect'] = "/home.html";
+		    userStatus['redirect'] = "/home.html";
 
 		    // Find devices based on decoded token
-//		    Device.find({ userEmail : decoded.email}, function(err, devices) {
-//			if (err) {
-//			    res.status(401).json({error: "Database Error"});
-//			} else {
-//			    // Construct device list
-//			    var deviceList = [];
-//			    for (device of devices) {
-//				deviceList.push({
-//				    deviceId: device.deviceId,
-//				    apikey: device.apikey,
-//				});
-//			    }
-//			    userStatus['devices'] = deviceList;
-//			    res.json(userStatus);
-//			}
-//		    });
-		    res.json(userStatus);
+		    Device.find({ userEmail : decoded.email}, function(err, devices) {
+			if (err) {
+			    res.status(401).json({error: "Database Error"});
+			} else {
+			    // Construct device list
+			    var deviceList = [];
+			    for (device of devices) {
+				deviceList.push({
+				    deviceId: device.deviceId,
+				    apikey: device.apikey,
+				});
+			    }
+			    userStatus['devices'] = deviceList;
+			    res.json(userStatus);
+			}
+		    });
 		}
 	    }
 	});
