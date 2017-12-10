@@ -12,7 +12,8 @@ const { check, validationResult } = require('express-validator/check');
 const { matchedData, sanitize } = require('express-validator/filter');
 
 // Secret key for JWT
-var secret = fs.readFileSync(__dirname + '/../../jwtkey').toString();
+var secret = fs.readFileSync(__dirname + '/../../config-sunsmart/jwtkey').toString();
+var gmailPass = fs.readFileSync(__dirname + '/../../config-sunsmart/gmail-key').toString();
 
 /* POST Authenticate user sign-in */
 router.post("/signin", function(req, res, next) {
@@ -22,13 +23,15 @@ router.post("/signin", function(req, res, next) {
     req.check('password', 'Password cannot be blank').notEmpty();
     req.sanitize('email').normalizeEmail({ remove_dots: false });
 
+    console.log(req.body.email);
+    
     // Check for validation errors
     var errors = req.validationErrors();
     if (errors) return res.status(400).send(errors);
     
     User.findOne( {email: req.body.email}, function(err, user) {
 	if (err) {
-	    res.status(401).json({error: "Database Error"});
+	    res.status(500).json({error: "Database Error"});
 	} else if (!user) {
 	    res.status(401).json({error: "User does not exist"});//TODO: Too detailed, change to bad user/password after debugging
 	} else {//Check user post hash against stored password hash for user email
@@ -93,7 +96,7 @@ router.post("/register", function(req, res, next) {
 			    service: "gmail",
 			    auth: {
 				user: "sunsmartalmm@gmail.com",
-				pass: "$1$qMIhqj1w$sbllSQ0A"
+				pass: gmailPass
 			    }
 			});
 
@@ -235,7 +238,7 @@ router.post("/resend", function(req, res, next) {
 		    service: "gmail",
 		    auth: {
 			user: "sunsmartalmm@gmail.com",
-			pass: "$1$qMIhqj1w$sbllSQ0A"
+			pass: gmailPass
 		    }
 		});
 

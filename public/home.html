@@ -24,6 +24,11 @@
 	<link rel="stylesheet" href="https://www.amcharts.com/lib/3/plugins/export/export.css" type="text/css" media="all" />
 	<script src="https://www.amcharts.com/lib/3/themes/light.js"></script>
 
+<link href="stylesheets/datepicker.css" rel="stylesheet">
+  <!--<link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/datetimepicker/latest/DateTimePicker.min.css" />-->
+
+<script src="javascripts/DateTimePicker.min.js" defer></script>
+<!--<script type="text/javascript" src="//cdn.jsdelivr.net/datetimepicker/latest/DateTimePicker.min.js"></script>-->
 
 </head>
 
@@ -31,8 +36,9 @@
 <div class="topnav" id="myTopnav">
   <a href="home.html" class="active">Home</a>
   <a href="forecast.html">Forecast</a>
-  <a href="https://www.epa.gov/sunsafety/health-effects-uv-radiation">UV Health Effects</a>
-  <a href="login.html">Sign In</a>
+  <a href="https://www.epa.gov/sunsafety/health-effects-uv-radiation" target= "_blank">UV Health Effects</a>
+  <a href="https://www.epa.gov/sunsafety/uv-index-scale-1" target= "_blank">UV Index Scale</a>
+  <a href="signin.html">Sign In</a>
   <a href="javascript:void(0);" class="icon" onclick="myFunction()">&#9776;</a>
 </div>
 
@@ -49,54 +55,60 @@
 <!--		</div>-->
 <!--	</div>-->
 <!--</div>-->
+
+
 <div class="row">
 <div class="col s12 m12">		
 	<div class="card blue-grey">
 		<div class="card-content white-text">
 			<div id="cardTitle">SunSmart UV Exposure</div>
 		<div id="chartdiv"></div>
+		<div id="chartdiv2"></div>
 		</div>
 	</div>
 </div>
 </div>
+
+<!--<div class="row">-->
+<!--<div class="col s12 m12">		-->
+<!--	<div class="card blue-grey">-->
+<!--		<div class="card-content white-text">-->
+<!--			<div id="cardTitle">SunSmart UV Exposure Data</div>-->
+<!--		<table id="tablediv">-->
+
+<!--<tr><th>Time</th><th>UV Intensity</th><th>Latitude</th><th>Longitude</th>-->
+
+
+
+<!--</table>-->
+
+		<!--</div>-->
+	</div>
+</div>
+</div>
+
+
+
+
 
 <div class="row">
 <div class="col s12 m12">		
 	<div class="card blue-grey">
 		<div class="card-content white-text">
-			<div id="cardTitle">SunSmart UV Exposure Data</div>
-		<table id="tablediv">
-
-<tr><th>Time</th><th>UV Intensity</th><th>Latitude</th><th>Longitude</th>
-
-
-
-</table>
-
-		</div>
-	</div>
-</div>
-</div>
-
-
-
-
-
-<div class="row">
-<div class="col s12 m6">		
-	<div class="card blue-grey">
-		<div class="card-content white-text">
 			<div id="cardTitle">Log Sunscreen Application</div>
-				<form action="https://wp.zybooks.com/form-viewer.php" target="_blank" method="POST">
+				<form>
   					 
   					 <span class="radios">
   					 <div class="formTitle">Select SPF:</div>
   					<span><input type="radio" name="spf" value="15" id="15"><label for="15">15</label></span>
 					<span><input type="radio" name="spf" value="30" id="30"><label for="30">30</label></span>
 					<span><input type="radio" name="spf" value="50" id="50"><label for="50">50</label></span>
-					<span><input type="radio" name="spf" value="75" id="75"><label for="75">75</label></span>
-					<span><input type="radio" name="spf" value="100" id="100"><label for="100">100</label></span>
-  					 <div class="submit"><input type="submit" value="Submit"></div>
+					<span><input type="radio" name="spf" value="70" id="70"><label for="70">70</label></span>
+					<span><input type="radio" name="spf" value="100" id="100"><label for="100">100</label></span><br>
+              	    <div class="formTitle">Enter time when sunscreen was applied:</div>
+              	    <input type="text" data-field="datetime" readonly>
+					 <div id="dtBox"></div>
+               <button id="submit" class="waves-effect waves-light btn">Submit</button><br>
   					 </span>
 					
 				</form>
@@ -104,15 +116,25 @@
 	</div>
 </div>
 
-<div class="col s12 m6">		
-	<div class="card blue-grey">
-		<div class="card-content white-text">
-			<div id="cardTitle">Local UV Index</div>
-			<div id="index">3.2</div>
-		</div>
-	</div>
-</div>
-</div>
+<!--<div class="col s12 m6">		-->
+<!--	<div class="card blue-grey">-->
+<!--		<div class="card-content white-text">-->
+<!--			<div id="cardTitle">Local UV Index</div>-->
+<!--			<div id="index">3.2</div>-->
+<!--		</div>-->
+<!--	</div>-->
+<!--</div>-->
+<!--</div>-->
+
+	
+ <!--  DateTime Input  -->
+
+ <input type="text" data-field="datetime" readonly>
+
+	
+	
+ <div id="dtBox"></div>
+
 
 </body>
 

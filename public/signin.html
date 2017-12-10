@@ -7,8 +7,8 @@
 	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 	<!--Import materialize.css-->
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css" media="screen,projection">
-	<link href="stylesheets/login.css" rel="stylesheet">
-	<script src="javascripts/SunSmart.js" defer></script>
+	<link href="stylesheets/signin.css" rel="stylesheet">
+	<script src="javascripts/signin.js" defer></script>
 	
 	<script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
@@ -20,7 +20,7 @@
 
 <body>
  
-   <div class="row">
+<div class="row">
 <div class="col s12 m12">		
 	<div class="card grey">
 		<div class="card-content white-text">
@@ -31,24 +31,21 @@
 </div>
 </div>
    
-   
-   
-   
-    <div class="row">
-    <div class="col s12 m12">
+<div class="row">
+<div class="col s12 m12">
     <div class="card">
- <form action="https://example.com">
-   <label for="first">Email:</label>
-   <input type="text" name="email" id="email"><br>
-   <label for="last">Password:</label>
-   <input type="text" name="password" id="password">
-   <input type="submit">
- </form>
- </div>
- </div>
- </div>
+       <!--<form action="https://ec2-13-59-3-196.us-east-2.compute.amazonaws.com/:3000/login">-->
+                <label for="email">Email:</label>
+                <input type="text" name="email" id="email"><br>
+                <label for="password">Password:</label>
+                <input type="text" name="password" id="password">
+               <button id="submit" class="waves-effect waves-light btn">Submit</button><br>
+                <a href="register.html">Create New Account</a>
+                <div class='red-text text-darken-2' id="error"></div>
+        <!--</form>-->
+    </div>
+</div>
+</div>
  
 </body>
- <!--<img src="http://www.sepeb.com/sunlight/sunlight-016.jpg">-->
-
 </html>

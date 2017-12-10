@@ -1,0 +1,32 @@
+
+body {
+    text-align: center;
+    background-image: url("https://solosgrowshop.com.au/wp-content/uploads/2015/08/sun_landscapes_light_rays_morning_photo_sky_1600x900_hd-wallpaper-77510.jpg");
+    
+}
+.row{
+    padding-top: 30px;
+    display: block;
+}
+#Title {
+    font-size: 50pt;
+}
+#header {
+    font-size: 20pt;
+}
+form {
+    padding: 20px;
+    background-color: white;
+    font-size: 18pt;
+}
+label {
+    font-size: 18pt;
+}
+#info {
+    font-size: 12pt;
+    padding-bottom: 10pt;
+}
+
+button {
+    margin-bottom: 10pt;
+}

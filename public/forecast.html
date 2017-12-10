@@ -1,11 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<meta charset="UTF-8">
+
 <head>
 	<!--Import Google Icon Font-->
 	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 	<!--Import materialize.css-->
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css" media="screen,projection">
 	<link href="stylesheets/SunSmart.css" rel="stylesheet">
-	<script src="SunSmart.js" defer></script>
+	<script src="javascripts/forecast.js" defer></script>
 	
+	<!--Import jQuery-->
 	<script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
 
@@ -31,22 +36,64 @@
   <a href="javascript:void(0);" class="icon" onclick="myFunction()">&#9776;</a>
 </div>
 
+<title>SunSmart</title>
+<body>
+    <div class="banner">
+        <h1 id="pageTitle">5-Day Weather & UV Forecast</h1>
+    </div>
 <div class="row">
-<div class="col s12 m6">
-	<div class="card blue-grey ">
-		<div class="card-content white-text">
-			<span class="card-title">Weather</span>
-		</div>
-	</div>
+<div class="col s12 m12">
+    <div class="card">
+                <label for="zip">Enter Zip Code:</label>
+                <input type="text" name="zip" id="zip" value="85721"><br>
+               <button id="zipSubmit" class="waves-effect waves-light btn">Submit</button><br>
+    </div>
+</div>
+<div>
+<!--<div class="row">
+<div class="col s12 m12">
+    <div class="card">
+                <label for="city">Enter City:</label>
+                <input type="text" name="city" id="city"><br>
+                <label for="state">Enter State:</label>
+                <input type="text" name="city" id="city"><br>
+               <button id="submit" class="waves-effect waves-light btn">Submit</button><br>
+    </div>
 </div>
 </div>
 <div class="row">
-<div class="col s12 m6">
-	<div class="card blue-grey ">
-		<div class="card-content white-text">
-			<span class="card-title">UV Index</span>
-		</div>
-	</div>
-</div>
+<div class="col s12 m3">
+    <div class="card">
+        <div id="icon">icon</div>
+    </div>
 </div>
 
+<div class="col s12 m3">
+    <div class="card">
+        <div id="temp"></div>
+    </div>
+</div>
+<div class="col s12 m3">
+    <div class="card">
+        <div id="uv"></div>
+    </div>
+</div>
+</div>  -->
+
+<table id="tempTable">
+    <thead>
+        <tr>
+            <th>Date/Time</th>
+            <th>Temperature</th>
+            <th>UV Index</th>
+        </tr>
+    </thead>
+    <tbody><tr></tr></tbody>
+</table>
+
+</body>
+
+</html>
+
+	<!--<div class="col s12 m6">-->
+	<!--<div id="chartdiv">-->
