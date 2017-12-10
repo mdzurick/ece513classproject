@@ -8,6 +8,8 @@ var User = require("../models/users");
 var bcrypt = require("bcrypt-nodejs");
 var crypto = require('crypto');
 var nodemailer = require('nodemailer');
+const { check, validationResult } = require('express-validator/check');
+const { matchedData, sanitize } = require('express-validator/filter');
 
 // Secret key for JWT
 var secret = fs.readFileSync(__dirname + '/../../jwtkey').toString();
@@ -15,9 +17,9 @@ var secret = fs.readFileSync(__dirname + '/../../jwtkey').toString();
 /* POST Authenticate user sign-in */
 router.post("/signin", function(req, res, next) {
     //Validating post body
-    req.assert('email', 'Email is not valid').isEmail();
-    req.assert('email', 'Email cannot be blank').notEmpty();
-    req.assert('password', 'Password cannot be blank').notEmpty();
+    req.check('email', 'Email is not valid').isEmail();
+    req.check('email', 'Email cannot be blank').notEmpty();
+    req.check('password', 'Password cannot be blank').notEmpty();
     req.sanitize('email').normalizeEmail({ remove_dots: false });
 
     // Check for validation errors
@@ -55,10 +57,10 @@ router.post("/signin", function(req, res, next) {
 /*POST register a new user */
 router.post("/register", function(req, res, next) {
     //Validating post body
-    req.assert('name', 'Name cannot be blank').notEmpty();
-    req.assert('email', 'Email is not valid').isEmail();
-    req.assert('email', 'Email cannot be blank').notEmpty();
-    req.assert('password', 'Password must be at least 10 characters long').len(10);
+    req.check('fullName', 'Name cannot be blank').notEmpty();
+    req.check('email', 'Email is not valid').isEmail();
+    req.check('email', 'Email cannot be blank').notEmpty();
+    req.check('password', 'Password must be at least 10 characters long').len(10);
     req.sanitize('email').normalizeEmail({ remove_dots: false });
 
     // Check for validation errors
@@ -84,22 +86,38 @@ router.post("/register", function(req, res, next) {
 		//Save verfication token
 		token.save(function(err, token) {
 		    if (err) {
-			return res.status(500).send({error: err.message)};
-		    } else {
-
+			return res.status(500).send({error: err.message});
+		    } else {			
 			//Confirmation Email
-			var transporter = nodemailer.createTransport({ service: 'Sendgrid', auth: { user: process.env.SENDGRID_USERNAME, pass: process.env.SENDGRID_PASSWORD } });
-			var mailOptions = { from: 'no-reply@SunSmart.com', to: user.email, subject: 'Confirm Your SunSmart Account',text: 'Hello,\n\n' + 'Please verify your account by clicking the link: \nhttp:\/\/' + req.headers.host + '\/confirm\/' + token.token + '.\n' };
+			var transporter = nodemailer.createTransport({
+			    service: "gmail",
+			    auth: {
+				user: "sunsmartalmm@gmail.com",
+				pass: "$1$qMIhqj1w$sbllSQ0A"
+			    }
+			});
+
+			var htmlSend = '<p>Hello,<br><br>Please verify your account by clicking the link:</p><p><a href=http:\/\/' + req.headers.host + '\/users\/confirm\/' + token.token + '>Confirm Email</a></p>';
+			
+			var mailOptions = {
+			    from: '"SunSmart" <no-reply@SunSmart.com>',
+			    to: user.email,
+			    subject: 'Confirm Your SunSmart Account',
+			    html: htmlSend };
+
+
 			transporter.sendMail(mailOptions, function (err) {
 			    if (err) {
+				User.findOneAndRemove({ email: { $eq: user.email }}, function(err, user) {
+				    console.log(user.email + " removed from db");
+				});
 				return res.status(500).send({error: err.message});
 			    }
+			    //User account created and confirmation message sent
 			    res.status(201).send({success: true, message: user.fullName + " has successfully created an account. A verification email has been sent to " + user.email + "." , redirect: "/signin.html"})
 			});
 		    }
 		});
-		
-//		res.status(201).json({success: true, message: user.fullName + " has successfully created an account.", redirect: "/signin.html"});
 	    }
 	});
     });
@@ -161,19 +179,11 @@ router.get("/status", function(req, res) {
 });
 
 
-/* POST confirm email for a registered user */
-router.post("/confirm", function(req, res, next) {
-    req.assert('email', 'Email is not valid').isEmail();
-    req.assert('email', 'Email cannot be blank').notEmpty();
-    req.assert('token', 'Token cannot be blank').notEmpty();
-    req.sanitize('email').normalizeEmail({ remove_dots: false });
-
-    // Check for validation errors
-    var errors = req.validationErrors();
-    if (errors) return res.status(400).send(errors);
+/* GET confirm email for a registered user */
+router.get("/confirm/:token", function(req, res, next) {
 
     // Find a matching token
-    Token.findOne({ token: req.body.token }, function (err, token) {
+    Token.findOne({ token: req.params.token }, function (err, token) {
 	if (!token) {
 	    return res.status(400).send({error: "Unable to find a valid conifrmation. Your requested confirmation may have already expired. \nPlease request another confirmation email"});
 	}
@@ -198,8 +208,8 @@ router.post("/confirm", function(req, res, next) {
 /* POST resend confirmation email */
 router.post("/resend", function(req, res, next) {
 
-    req.assert('email', 'Email is not valid').isEmail();
-    req.assert('email', 'Email cannot be blank').notEmpty();
+    req.check('email', 'Email is not valid').isEmail();
+    req.check('email', 'Email cannot be blank').notEmpty();
     req.sanitize('email').normalizeEmail({ remove_dots: false });
 
     // Check for validation errors
@@ -219,18 +229,34 @@ router.post("/resend", function(req, res, next) {
 	token.save(function (err) {
 	    if (err) {
 		return res.status(500).send({ error: err.message });
+	    } else {			
+		//Confirmation Email
+		var transporter = nodemailer.createTransport({
+		    service: "gmail",
+		    auth: {
+			user: "sunsmartalmm@gmail.com",
+			pass: "$1$qMIhqj1w$sbllSQ0A"
+		    }
+		});
+
+		var htmlSend = '<p>Hello,<br><br>Please verify your account by clicking the link:</p><p><a href=http:\/\/' + req.headers.host + '\/users\/confirm\/' + token.token + '>Confirm Email</a></p>';
+		
+		var mailOptions = {
+		    from: '"SunSmart" <no-reply@SunSmart.com>',
+		    to: user.email,
+		    subject: 'Confirm Your SunSmart Account',
+		    html: htmlSend };
+
+		transporter.sendMail(mailOptions, function (err) {
+		    if (err) {
+			return res.status(500).send({error: err.message});
+		    }
+
+		    //User account created and confirmation message sent
+		    res.status(201).send({success: true, message: user.fullName + "A verification email has been sent to " + user.email + "." , redirect: "/signin.html"});
+
+		});
 	    }
-	    // Send the email
-	    var transporter = nodemailer.createTransport({ service: 'Sendgrid', auth: { user: process.env.SENDGRID_USERNAME, pass: process.env.SENDGRID_PASSWORD } });
-	    var mailOptions = { from: 'no-reply@SunSmart.com', to: user.email, subject: 'Confirm Your SunSmart Account',text: 'Hello,\n\n' + 'Please verify your account by clicking the link: \nhttp:\/\/' + req.headers.host + '\/confirm\/' + token.token + '.\n' };
-	    transporter.sendMail(mailOptions, function (err) {
-		if (err) {
-		    return res.status(500).send({error: err.message});
-		}
-
-		res.status(201).send({success: true, message: user.fullName + " has successfully created an account. A verification email has been sent to " + user.email + "." , redirect: "/signin.html"});
-
-	    });
 	});
     });
 });
