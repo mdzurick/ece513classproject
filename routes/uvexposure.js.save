@@ -1,0 +1,17 @@
+var express = require('express');
+var router = express.Router();
+var SensorData = require("../models/sensordata");
+
+/* GET list of all sensor data */
+router.get("/", function(req, res) {
+    
+    SensorData.find({},{'latitude': true}).toArray(function(err, sensordata) {
+	if (err) {
+	    res.status(400).send(err);
+	} else {
+	    res.json(sensordata);
+	}
+    });
+});
+
+module.exports = router;
