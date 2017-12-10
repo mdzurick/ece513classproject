@@ -25,7 +25,7 @@ function ajaxGetRequest() {
     xhr.addEventListener("load", responseReceivedHandler);
     xhr.responseType = "json";        
 //xhr.open("GET", "http://ec2-13-59-3-196.us-east-2.compute.amazonaws.com:3000/sensordata/");
-   xhr.open("GET", "http://ec2-18-220-99-129.us-east-2.compute.amazonaws.com:3000/sensordata/");
+   xhr.open("GET", "/sensordata/");
     xhr.send();
 }
 
@@ -34,7 +34,7 @@ function ajaxGetRequest2() {
     var xhr = new XMLHttpRequest();
     xhr.addEventListener("load", responseReceivedHandler2);
     xhr.responseType = "json";        
-    xhr.open("GET", "http://ec2-18-220-99-129.us-east-2.compute.amazonaws.com:3000/spfvalues/");
+    xhr.open("GET", "/spfvalues/");
     xhr.send();
 }
 

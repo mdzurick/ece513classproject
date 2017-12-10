@@ -39,6 +39,14 @@ $(function() {
     		var xhr = new XMLHttpRequest();
     		xhr.addEventListener("load", function() {
     		    if (this.status == 201) {
+    		        function tokenSuccess(err, response) {
+                        if(err){
+                              throw err;
+                         }
+                         sessionStorage.setItem('key', response.body.token);
+                         console.log(response.body.token);
+                         console.log("getKey"+sessionStorage.getItem('key'));
+                    }
     		        location.href = 'home.html';
     		    } else {
     			    $("#error").html(this.response.error).show();
@@ -46,7 +54,7 @@ $(function() {
     		    
     			});
     		xhr.responseType = "json";
-    		xhr.open("POST", "http://ec2-18-220-99-129.us-east-2.compute.amazonaws.com:3000/users/signin");
+    		xhr.open("POST", "/users/signin");
     		xhr.setRequestHeader("Content-type", "application/json");
    			xhr.send(JSON.stringify({ email: userEmail, password: userPassword }));
     	}

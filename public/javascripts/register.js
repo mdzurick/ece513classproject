@@ -47,7 +47,7 @@ $(function() {
     		    
     			});
     		xhr.responseType = "json";
-    		xhr.open("POST", "http://ec2-18-220-99-129.us-east-2.compute.amazonaws.com:3000/users/register");
+    		xhr.open("POST", "/users/register");
     		xhr.setRequestHeader("Content-type", "application/json");
    			xhr.send(JSON.stringify({ email: userEmail, fullName: userFullName, password: userPassword }));
     	}
