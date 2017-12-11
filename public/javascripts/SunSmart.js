@@ -1,12 +1,14 @@
 $(document).ready(function() {
     $('select').material_select();
+    console.log("localStorage"+window.localStorage.getItem('token'));
+
+    $("#cardTitle2").html(window.localStorage.getItem('token'));
         $("#dtBox").DateTimePicker();
-        var chartData2 = [{strength:30, firstApplied: "10-12-2017 14:02"}, {strength:30, firstApplied: "10-14-2017 14:02"}]; 
-        generateChart2(chartData2);
+        
 });
 
 ajaxGetRequest();
-ajaxGetRequest2();
+// ajaxGetRequest2();
 
 
 /* Toggle between adding and removing the "responsive" class to topnav when the user clicks on the icon */
@@ -25,16 +27,19 @@ function ajaxGetRequest() {
     xhr.addEventListener("load", responseReceivedHandler);
     xhr.responseType = "json";        
 //xhr.open("GET", "http://ec2-13-59-3-196.us-east-2.compute.amazonaws.com:3000/sensordata/");
+    
    xhr.open("GET", "/sensordata/");
-    xhr.send();
+   xhr.setRequestHeader("X-Auth", window.localStorage.getItem('token'));
+   xhr.send();
 }
 
 /* Make an AJAX GET call to server to get all sunscreen info*/
 function ajaxGetRequest2() {
     var xhr = new XMLHttpRequest();
     xhr.addEventListener("load", responseReceivedHandler2);
-    xhr.responseType = "json";        
+    xhr.responseType = "json"; 
     xhr.open("GET", "/spfvalues/");
+    xhr.setRequestHeader("X-Auth", window.localStorage.getItem('token'));
     xhr.send();
 }
 
@@ -43,7 +48,7 @@ function responseReceivedHandler() {
    if (this.status === 200) {
        var JSONArray = this.response;
 
-       chartData = []; 
+       var chartData = []; 
       
        for (var item of JSONArray) {
 
@@ -71,11 +76,9 @@ function responseReceivedHandler2() {
    if (this.status === 200) {
        var JSONArray2 = this.response;
 
-     //  chartData2 = [{strength:30, firstApplied: "10-12-2017 14:02"}]; 
-      
        for (var item of JSONArray2) {
 
-	
+	var chartData2 = [];
 
 	   chartData2.push({
 	       spf: item.strength,
@@ -208,23 +211,43 @@ function zoomChart(chart) {
 }
 
 //posts sunscreen data
-    $("#submit").click(function(){
-      var strength = $("#SPF").val();
-      var firstApplied = $("#time").val();
- 
-    $.post("http://ec2-13-59-3-196.us-east-2.compute.amazonaws.com:3000/sunscreen/",
-    {
-        strength: SPF,
-        firstApplied: time
-    },
-        function(data, status){
-        alert("Data: " + data + "\nStatus: " + status);
-        if (status === "201"){
-            location.href = 'home.html';
-        }
-        });
-    });
+    // $("#submit").click(function(){
+    //   var strength = $("#strength").val();
+    //   var firstApplied = $("#firstApplied").val();
+    //   var token = window.localStorage.getItem("token");
+   
+    // $.post("http://ec2-13-59-3-196.us-east-2.compute.amazonaws.com:3000/sunscreen/",
+    // {
+    //     strength: strength,
+    //     firstApplied: firstApplied
+    // },
+    //     function(data, status){
+    //     alert("Data: " + data + "\nStatus: " + status);
+    //     if (status === "201"){
+    //         location.href = 'home.html';
+    //     }
+    //     });
+    // });
 
-
+/* Make an AJAX Post call to submit sunscreen info*/
+$("#submit").click(function(){
+            var strength = $(".strength").val();
+            var firstApplied = $("#firstApplied").val();
+    		var xhr = new XMLHttpRequest();
+    		xhr.addEventListener("load", function() {
+    		    if (this.status == 201) {
+    		    } 
+    		    else {
+    			    $("#error").html(this.response.error).show();
+    		    }
+    		    
+    			});
+    		xhr.responseType = "json";
+    		xhr.open("POST", "/spfvalues");
+    		xhr.setRequestHeader("Content-type", "application/json");
+    		xhr.setRequestHeader("X-Auth", window.localStorage.getItem("token"));
+            
+   			xhr.send(JSON.stringify({ strength: strength, firstApplied: firstApplied}));
+});
 
 

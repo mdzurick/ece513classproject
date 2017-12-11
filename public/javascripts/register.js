@@ -40,7 +40,8 @@ $(function() {
     		var xhr = new XMLHttpRequest();
     		xhr.addEventListener("load", function() {
     		    if (this.status == 201) {
-    		        location.href = 'signin.html';
+    		        $("#emailSent").html("A verification link has been sent to your email account. Please click this link to continue the registration process.");
+    		       // location.href = 'signin.html';
     		    } else {
     			    $("#error").html(this.response.error).show();
     		    }

@@ -43,19 +43,24 @@ $(function() {
                         if(err){
                               throw err;
                          }
-                         sessionStorage.setItem('key', response.body.token);
-                         console.log(response.body.token);
-                         console.log("getKey"+sessionStorage.getItem('key'));
+
                     }
-    		        location.href = 'home.html';
+                    window.localStorage.setItem("token", this.response.token);
+                    console.log("response.token"+this.response.token);
+                     console.log("localStorage"+window.localStorage.getItem("token"));
+                     
+                    window.location.href = "home.html";
+         
     		    } else {
     			    $("#error").html(this.response.error).show();
     		    }
     		    
     			});
     		xhr.responseType = "json";
+    		
     		xhr.open("POST", "/users/signin");
     		xhr.setRequestHeader("Content-type", "application/json");
+    		xhr.setRequestHeader("X-Auth", window.localStorage.getItem("token"));
    			xhr.send(JSON.stringify({ email: userEmail, password: userPassword }));
     	}
     });
