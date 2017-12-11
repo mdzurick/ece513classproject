@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var Device = require("../models/devices");
+var SensorData = require("../models/sensordata");
 var fs = require('fs');
 var jwt = require("jwt-simple");
 
@@ -24,8 +25,7 @@ router.get('/:devid', function(req, res, next) {
 
     // Check if the X-Auth header is set
     if (!req.headers["x-auth"]) {
-	responseJson.message = "Missing X-Auth header."
-	return res.status(401).json(respnseJson);
+	return res.status(401).json({error: "No X-Auth Header"});
     }
     // X-Auth should contain the token value
     var token = req.headers["x-auth"];
@@ -55,11 +55,55 @@ router.get('/:devid', function(req, res, next) {
 	    for (var device of foundDevices) {
 		// For each found device add a new element to the array
 		// with the device id and last contact time
-		responseJson.devices.push({ "deviceId": device.deviceId, "lastContact": device.lastContact});
+		responseJson.devices.push({
+		    "deviceId": device.deviceId,
+		    "apikey": device.apikey,
+		    "lastContact": device.lastContact});
 	    }
 	    res.status(200).json(responseJson);
 	}
     });
+    } catch (ex) {
+	res.status(401).json({error: "Authentication Error"});
+    }
+});
+
+
+// GET request all sensor data published by a given device
+router.get('/data/:devid/', function(req, res, next) {
+
+    // Check if the X-Auth header is set
+    if (!req.headers["x-auth"]) {
+	return res.status(401).json({error: "No X-Auth Header"});
+    }
+    // X-Auth should contain the token value
+    var token = req.headers["x-auth"];
+
+    var deviceId = req.params.devid;
+
+    // try decoding
+    try {
+	var decoded = jwt.decode(token, secret);
+	
+	// Query the device collection for given device
+	Device.findOne({ deviceId: deviceId }, function(err, device) {
+	    if (err) {
+		res.status(500).json({error: err});
+	    } else if (!device) {
+		res.status(400).json({ error: "Device ID not found"});
+	    } else if (device.userEmail !== decoded.email) {//Check that owner of device is making request
+		res.status(401).json({ error: "User Not Authorized" });
+	    }
+	    else {//find all sensor data published by given device
+		SensorData.find({ deviceId: device.deviceId }, function(err, data) {
+		    if (err) {
+			res.status(500).json({ error: err });
+		    } else {
+			res.status(200).json(data);
+		    }
+		});
+	    }
+	});
     } catch (ex) {
 	res.status(401).json({error: "Authentication Error"});
     }
@@ -78,8 +122,7 @@ router.post('/register', function(req, res, next) {
 
     // Check if the X-Auth header is set
     if (!req.headers["x-auth"]) {
-	responseJson.message = "Missing X-Auth header."
-	return res.status(401).json(respnseJson);
+	return res.status(401).json({error: "No X-Auth Header"});
     }
     // X-Auth should contain the token value
     var token = req.headers["x-auth"];
