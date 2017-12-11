@@ -6,7 +6,6 @@ var User = db.model("User", {
     fullName:     { type: String, required: true },
     passwordHash: String,
     lastAccess:   { type: Date, default: Date.now },
-    userDevices:  [ String ],
     isVerified: { type: Boolean, default: false }
 });
 

@@ -19,38 +19,51 @@ function getNewApikey() {
     return newApikey;
 }
 
-/*
 // GET request return one or "all" devices registered and last time of contact.
-router.get('/status/:devid', function(req, res, next) {
+router.get('/:devid', function(req, res, next) {
+
+    // Check if the X-Auth header is set
+    if (!req.headers["x-auth"]) {
+	responseJson.message = "Missing X-Auth header."
+	return res.status(401).json(respnseJson);
+    }
+    // X-Auth should contain the token value
+    var token = req.headers["x-auth"];
+
     var deviceId = req.params.devid;
 
-    // Create query based on parameters deviceId
-    if (deviceId == "all") {
-	var query = {};
-    }
-    else {
-	var query = { "deviceId": deviceId };
-    }
+    // try decoding
+    try {
+	var decoded = jwt.decode(token, secret);
 
-    // Query the devices collection to returned requested documents
-    Device.find(query, function(err, allDevices) {
+	// Create query based on parameters deviceId
+	if (deviceId == "all" || deviceId == "") {
+	    var query = {userEmail: decoded.email};
+	}
+	else {
+	    var query = { $and: [{ userEmail: decoded.email }, { deviceId: deviceId }] };
+	}
+	
+    // Query the devices collection for one or all devices
+	Device.find(query, function(err, foundDevices) {
 	if (err) {
-	    var errormsg = {"message": err};
-	    res.status(400).send(JSON.stringify(errormsg));
+	    res.status(500).json({error: err});
 	}
 	else {
 	    // Create JSON response consisting of an array of devices
 	    var responseJson = { devices: [] };
-	    for (var doc of allDevices) {
+	    for (var device of foundDevices) {
 		// For each found device add a new element to the array
 		// with the device id and last contact time
-		responseJson.devices.push({ "deviceId": doc.deviceId, "lastContact": doc.lastContact});
+		responseJson.devices.push({ "deviceId": device.deviceId, "lastContact": device.lastContact});
 	    }
-	    res.status(200).send(JSON.stringify(responseJson));
+	    res.status(200).json(responseJson);
 	}
     });
+    } catch (ex) {
+	res.status(401).json({error: "Authentication Error"});
+    }
 });
-*/
 
 
 // POST registers a new device given the device ID and user email
