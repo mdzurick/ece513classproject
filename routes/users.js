@@ -12,8 +12,8 @@ const { check, validationResult } = require('express-validator/check');
 const { matchedData, sanitize } = require('express-validator/filter');
 
 // Secret key for JWT
-var secret = fs.readFileSync(__dirname + '/../../config-sunsmart/jwtkey').toString();
-var gmailPass = fs.readFileSync(__dirname + '/../../config-sunsmart/gmail-key').toString();
+//var secret = fs.readFileSync(__dirname + '/../../config-sunsmart/jwtkey').toString();
+//var gmailPass = fs.readFileSync(__dirname + '/../../config-sunsmart/gmail-key').toString();
 
 /* POST Authenticate user sign-in */
 router.post("/signin", function(req, res, next) {

@@ -1,8 +1,8 @@
 var db = require("../db");
 
-var apiusers = new db.model("apiusers", {
+var APIuser = db.model("APIuser", {
     email: { type: String, required: true, unique: true},
-    apikey: String
+    apikey: { type : String, required: true, unique: true}
 });
 
-module.exports = apiusers;
+module.exports = APIuser;

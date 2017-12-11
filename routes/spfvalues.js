@@ -7,7 +7,7 @@ var User = require("../models/users");
 var mongoose = require("mongoose");
 
 // Secret key for JWT
-var secret = fs.readFileSync(__dirname + '/../../config-sunsmart/jwtkey').toString();
+//var secret = fs.readFileSync(__dirname + '/../../config-sunsmart/jwtkey').toString();
 
 /* GET return SPF json object associated with the provided token */
 router.get("/", function(req, res) {
