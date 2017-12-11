@@ -1,7 +1,5 @@
 var express = require('express');
 var router = express.Router();
-var fs = require('fs');
-var request = require("request");
 var SensorData = require("../models/sensordata");
 var APIuser = require("../models/apiusers");
 var reverse = require('reverse-geocode');
