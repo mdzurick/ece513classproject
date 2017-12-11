@@ -10,6 +10,9 @@ var SensorData = db.model("SensorData", {
     altitude: Number,
     UV: Number,
     measuredTime: Number
+    zipcode: Number,
+    city: String,
+    state: String
 });
 
 module.exports = SensorData;

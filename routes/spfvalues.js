@@ -35,7 +35,7 @@ router.get("/", function(req, res) {
 		    SPFvalue.find({userEmail: decoded.email }, function(err, spf) {
 			if (err) {
 			    res.status(500).json({success: false, error: err });
-			} else if (spf === undefined || spf.length == 0) {
+			} else if (spf == null || spf.length == 0) {
 			    res.status(400).json({ success: false, error: "No SPF data available for user" });
 			}
 			else {

@@ -12,6 +12,7 @@ var sensordata = require('./routes/sensordata');
 var testing = require('./routes/testing');
 var devices = require('./routes/devices');
 var spfvalues = require('./routes/spfvalues');
+var publicapi = require('./routes/publicapi'); 
 
 var app = express();
 
@@ -49,6 +50,7 @@ app.use('/sensordata', sensordata);
 app.use('/testing', testing);
 app.use('/devices', devices);
 app.use('/spfvalues', spfvalues);
+app.use('/publicapi', publicapi);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

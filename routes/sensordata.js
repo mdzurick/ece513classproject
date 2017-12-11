@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var SensorData = require("../models/sensordata");
 var Device = require("../models/devices");
+var reverse = require('reverse-geocode');
 
 /* GET list of all sensor data */
 router.get("/testresults", function(req, res) {
@@ -46,6 +47,13 @@ var parseBody = new Object();
 	} else {
 
 	    if (device.apikey === parseBody.apikey) {//Correct apikey, add data to db
+
+		//Reverse lookup to find zipcode, city, state
+		var geoInfo = reverse.lookup(parseBody.latitude, parseBody.longitude);
+		parseBody.zipcode = geoInfo.zipcode;
+		parseBody.city = geoInfo.city;
+		parseBody.state = geoInfo.state;
+		
 		var sensordata = new SensorData(parseBody);
 		sensordata.save(function(err, sensordata) {
 		    if (err) {
