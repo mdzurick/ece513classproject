@@ -1,9 +1,10 @@
 var express = require('express');
 var router = express.Router();
 var SensorData = require("../models/sensordata");
+var Device = require("../models/devices");
 
 /* GET list of all sensor data */
-router.get("/", function(req, res) {
+router.get("/testresults", function(req, res) {
     
     SensorData.find(function(err, sensordata) {
 	if (err) {
@@ -35,13 +36,27 @@ var parseBody = new Object();
 	    }
 	}
     }
-    
-    var sensordata = new SensorData(parseBody);
-    sensordata.save(function(err, sensordata) {
+
+    Device.findOne({ deviceId: parseBody.deviceId }, function(err, device) {
+
 	if (err) {
-	    res.status(400).send(err);
+	    res.status(500).json({ error: err });
+	} else if (!device) {
+	    res.status(400).json({ error: "Device ID not found"});
 	} else {
-	    res.status(201).json(sensordata);
+
+	    if (device.apikey === parseBody.apikey) {//Correct apikey, add data to db
+		var sensordata = new SensorData(parseBody);
+		sensordata.save(function(err, sensordata) {
+		    if (err) {
+			res.status(500).send({ error: err });
+		    } else {
+			res.status(201).json(sensordata);
+		    }
+		});
+	    } else {
+		res.status(400).json({ error: "Invalid API Key" });
+	    }
 	}
     });
 });
